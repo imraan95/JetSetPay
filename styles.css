@@ -134,6 +134,7 @@ body {
 
 .cta-buttons {
     display: flex;
+    justify-content: center;
     gap: 1rem;
     margin-top: 2rem;
 }
@@ -560,4 +561,93 @@ input:invalid:focus {
 .submit-button:hover {
     background: var(--primary-dark);
     transform: translateY(-1px);
+}
+
+/* How It Works Section */
+.how-it-works {
+    padding: 6rem 0;
+    background: linear-gradient(to bottom, var(--white), var(--gray-50));
+    text-align: center;
+}
+
+.how-it-works h2 {
+    font-size: 2.5rem;
+    color: var(--text-color);
+    margin-bottom: 3rem;
+    font-weight: 700;
+}
+
+.steps-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.step-card {
+    background: var(--white);
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.step-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.1);
+}
+
+.step-number {
+    width: 40px;
+    height: 40px;
+    background: var(--primary-color);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.2rem;
+    margin: 0 auto 1.5rem;
+}
+
+.step-card h3 {
+    color: var(--text-color);
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.step-card p {
+    color: #6B7280;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+.steps-footer {
+    font-size: 1.2rem;
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+@media (max-width: 768px) {
+    .steps-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        padding: 0 1.5rem;
+    }
+
+    .step-card {
+        padding: 1.5rem;
+    }
+
+    .how-it-works {
+        padding: 4rem 0;
+    }
+
+    .how-it-works h2 {
+        font-size: 2rem;
+        margin-bottom: 2rem;
+    }
 } 
