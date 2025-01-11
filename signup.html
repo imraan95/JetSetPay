@@ -5,9 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up - JetSetPay</title>
     <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <script src="https://www.gstatic.com/firebasejs/9.x.x/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.x.x/firebase-auth-compat.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <script type="text/javascript">
         (function() {
@@ -43,12 +41,6 @@
                         <input type="email" id="email" name="email" required>
                     </div>
                     <div class="form-group">
-                        <label for="password">Password</label>
-                        <input type="password" id="password" name="password" required 
-                               minlength="8" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-                               title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters">
-                    </div>
-                    <div class="form-group">
                         <label for="channelUrl">Channel URL</label>
                         <input type="url" id="channelUrl" name="channelUrl" required 
                                placeholder="https://youtube.com/..." pattern="https?://.+">
@@ -67,8 +59,7 @@
     <div id="successModal" class="modal">
         <div class="modal-content">
             <h2>Thank You!</h2>
-            <p>Your account has been created successfully. Please check your email to verify your account.</p>
-            <p>Our team will review your application and get in touch with you soon.</p>
+            <p>We'll review your application and get in touch with you soon.</p>
             <button onclick="closeModal()" class="close-button">Close</button>
         </div>
     </div>

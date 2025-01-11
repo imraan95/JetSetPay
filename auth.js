@@ -1,23 +1,9 @@
-// Firebase configuration
-const firebaseConfig = {
-    apiKey: "AIzaSyBxJLvqXUCxCZqHPgHLQtW_Xc-lW_Qwu4Y",
-    authDomain: "jetsetpay-demo.firebaseapp.com",
-    projectId: "jetsetpay-demo",
-    storageBucket: "jetsetpay-demo.appspot.com",
-    messagingSenderId: "123456789012",
-    appId: "1:123456789012:web:abc123def456ghi789"
-};
-
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
-
 // Test credentials for demo
 const TEST_EMAIL = 'm.imraan95@gmail.com';
 const TEST_PASSWORD = 'test';
 
 // Handle Login
-async function handleLogin(event) {
+function handleLogin(event) {
     event.preventDefault();
     
     const email = document.getElementById('email').value;
@@ -27,7 +13,7 @@ async function handleLogin(event) {
     try {
         // For demo purposes, only allow test credentials
         if (email === TEST_EMAIL && password === TEST_PASSWORD) {
-            // Create a custom user object since we're not actually using Firebase
+            // Create a custom user object
             const user = {
                 displayName: 'Imraan',
                 email: TEST_EMAIL
@@ -44,7 +30,7 @@ async function handleLogin(event) {
 }
 
 // Handle Sign Up
-async function handleSignup(event) {
+function handleSignup(event) {
     event.preventDefault();
     
     const name = document.getElementById('name').value;
@@ -57,7 +43,7 @@ async function handleSignup(event) {
 }
 
 // Handle Forgot Password
-async function forgotPassword(event) {
+function forgotPassword(event) {
     event.preventDefault();
     
     const email = document.getElementById('email').value;
