@@ -1,164 +1,214 @@
-document.addEventListener('DOMContentLoaded', function() {
-    const fileInput = document.getElementById('video-file');
-    const youtubeInput = document.getElementById('youtube-link');
-    const selectedFileText = document.getElementById('selected-file');
-    const analyzeButton = document.getElementById('analyze-button');
-    const resultsSection = document.getElementById('results-section');
-    const startOverButton = document.getElementById('start-over');
-    const saveCampaignButton = document.getElementById('save-campaign');
+document.addEventListener('DOMContentLoaded', () => {
+    // Initialize step navigation
+    const steps = document.querySelectorAll('.step');
+    const containers = document.querySelectorAll('.flow-container');
+    let currentStep = 0;
 
-    // Handle file selection
-    fileInput.addEventListener('change', function(e) {
-        if (e.target.files.length > 0) {
-            selectedFileText.textContent = `Selected: ${e.target.files[0].name}`;
-            youtubeInput.value = ''; // Clear YouTube input
-            analyzeButton.disabled = false;
-        }
-    });
+    // File upload and YouTube link elements
+    const fileInput = document.getElementById('videoFile');
+    const youtubeInput = document.getElementById('youtubeLink');
+    const analyzeButton = document.getElementById('analyzeButton');
+    const continueButton = document.getElementById('continueButton');
+    const startOverButton = document.getElementById('startOverButton');
+    const saveCampaignButton = document.getElementById('saveCampaignButton');
 
-    // Handle YouTube link input
-    youtubeInput.addEventListener('input', function(e) {
-        if (e.target.value.trim() !== '') {
-            fileInput.value = ''; // Clear file input
-            selectedFileText.textContent = ''; // Clear selected file text
+    // Event listeners for file and link inputs
+    fileInput.addEventListener('change', handleFileInput);
+    youtubeInput.addEventListener('input', handleYoutubeInput);
+    analyzeButton.addEventListener('click', handleAnalyze);
+    continueButton.addEventListener('click', () => goToStep(2));
+    startOverButton.addEventListener('click', resetFlow);
+    saveCampaignButton.addEventListener('click', saveCampaign);
+
+    function handleFileInput() {
+        if (fileInput.files.length > 0) {
+            youtubeInput.value = '';
+            youtubeInput.disabled = true;
             analyzeButton.disabled = false;
         } else {
-            analyzeButton.disabled = true;
+            youtubeInput.disabled = false;
+            analyzeButton.disabled = !youtubeInput.value;
         }
-    });
+    }
 
-    // Handle content analysis
-    analyzeButton.addEventListener('click', async function() {
+    function handleYoutubeInput() {
+        if (youtubeInput.value) {
+            fileInput.value = '';
+            fileInput.disabled = true;
+            analyzeButton.disabled = false;
+        } else {
+            fileInput.disabled = false;
+            analyzeButton.disabled = !fileInput.files.length;
+        }
+    }
+
+    async function handleAnalyze() {
         // Show loading state
         analyzeButton.disabled = true;
         analyzeButton.textContent = 'Analyzing...';
 
-        try {
-            // Simulate API call delay
-            await new Promise(resolve => setTimeout(resolve, 2000));
+        // Simulate API call delay
+        await new Promise(resolve => setTimeout(resolve, 2000));
 
-            // Mock analysis results
-            const results = {
-                products: [
-                    {
-                        name: 'Samsonite Luggage',
-                        timestamp: '0:45',
-                        confidence: '95%',
-                        category: 'Travel Gear'
-                    },
-                    {
-                        name: 'GoPro Hero 10',
-                        timestamp: '2:15',
-                        confidence: '92%',
-                        category: 'Camera Equipment'
-                    }
-                ],
-                links: [
-                    {
-                        product: 'Samsonite Winfield 3 DLX',
-                        url: 'https://example.com/aff/samsonite-123',
-                        commission: '12%'
-                    },
-                    {
-                        product: 'GoPro HERO10 Black',
-                        url: 'https://example.com/aff/gopro-456',
-                        commission: '15%'
-                    }
-                ]
-            };
+        // Mock detected products
+        const products = [
+            {
+                name: 'Travel Backpack Pro',
+                timestamp: '0:45',
+                confidence: 92,
+                category: 'Travel Gear'
+            },
+            {
+                name: 'Luxury Resort Stay',
+                timestamp: '2:15',
+                confidence: 88,
+                category: 'Accommodation'
+            },
+            {
+                name: 'Adventure Camera Kit',
+                timestamp: '3:30',
+                confidence: 95,
+                category: 'Photography'
+            }
+        ];
 
-            // Display results
-            displayResults(results);
-            
-            // Show results section
-            resultsSection.style.display = 'block';
-            
-            // Reset analyze button
-            analyzeButton.textContent = 'Analyze Content';
-            analyzeButton.disabled = true;
+        displayProducts(products);
+        goToStep(1);
 
-        } catch (error) {
-            console.error('Error analyzing content:', error);
-            alert('An error occurred while analyzing the content. Please try again.');
-            
-            // Reset analyze button
-            analyzeButton.textContent = 'Analyze Content';
-            analyzeButton.disabled = false;
-        }
-    });
+        // Reset button state
+        analyzeButton.textContent = 'Analyze Content';
+        analyzeButton.disabled = false;
+    }
 
-    // Handle start over
-    startOverButton.addEventListener('click', function() {
-        // Reset form
-        fileInput.value = '';
-        youtubeInput.value = '';
-        selectedFileText.textContent = '';
-        resultsSection.style.display = 'none';
-        analyzeButton.disabled = true;
-    });
+    function displayProducts(products) {
+        const productsGrid = document.querySelector('.products-grid');
+        productsGrid.innerHTML = '';
 
-    // Handle save campaign
-    saveCampaignButton.addEventListener('click', function() {
-        // Show success message
-        alert('Campaign saved successfully!');
-        // Redirect to campaigns page
-        window.location.href = 'campaigns.html';
-    });
-
-    // Function to display analysis results
-    function displayResults(results) {
-        const productsList = document.getElementById('products-list');
-        const linksList = document.getElementById('links-list');
-
-        // Clear previous results
-        productsList.innerHTML = '';
-        linksList.innerHTML = '';
-
-        // Display detected products
-        results.products.forEach(product => {
+        products.forEach(product => {
             const productItem = document.createElement('div');
             productItem.className = 'product-item';
             productItem.innerHTML = `
-                <h4>${product.name}</h4>
-                <div class="product-details">
-                    <span>Timestamp: ${product.timestamp}</span> |
-                    <span>Confidence: ${product.confidence}</span> |
-                    <span>Category: ${product.category}</span>
-                </div>
+                <h3>${product.name}</h3>
+                <p>Category: ${product.category}</p>
+                <p>Timestamp: ${product.timestamp}</p>
+                <p>Confidence: ${product.confidence}%</p>
             `;
-            productsList.appendChild(productItem);
+            productsGrid.appendChild(productItem);
         });
 
-        // Display affiliate links
-        results.links.forEach(link => {
+        // Enable continue button
+        continueButton.disabled = false;
+    }
+
+    function displayAffiliateLinks(products) {
+        const linksGrid = document.querySelector('.links-grid');
+        linksGrid.innerHTML = '';
+
+        products.forEach(product => {
+            const affiliateLink = `https://jetsetpay.com/affiliate/${product.name.toLowerCase().replace(/\s+/g, '-')}`;
             const linkItem = document.createElement('div');
             linkItem.className = 'link-item';
             linkItem.innerHTML = `
-                <div class="link-info">
-                    <h4>${link.product}</h4>
-                    <div class="commission">Commission: ${link.commission}</div>
+                <div>
+                    <h3>${product.name}</h3>
+                    <p class="link-url">${affiliateLink}</p>
                 </div>
-                <button class="copy-button" data-url="${link.url}">Copy Link</button>
+                <button class="flow-button secondary" onclick="copyToClipboard('${affiliateLink}')">
+                    Copy Link
+                </button>
             `;
-            linksList.appendChild(linkItem);
-        });
-
-        // Add click handlers for copy buttons
-        document.querySelectorAll('.copy-button').forEach(button => {
-            button.addEventListener('click', async function() {
-                const url = this.dataset.url;
-                try {
-                    await navigator.clipboard.writeText(url);
-                    const originalText = this.textContent;
-                    this.textContent = 'Copied!';
-                    setTimeout(() => {
-                        this.textContent = originalText;
-                    }, 2000);
-                } catch (err) {
-                    console.error('Failed to copy text:', err);
-                    alert('Failed to copy link. Please try again.');
-                }
-            });
+            linksGrid.appendChild(linkItem);
         });
     }
+
+    function goToStep(stepIndex) {
+        // Update steps
+        steps.forEach((step, index) => {
+            if (index < stepIndex) {
+                step.classList.remove('active');
+                step.classList.add('completed');
+            } else if (index === stepIndex) {
+                step.classList.add('active');
+                step.classList.remove('completed');
+            } else {
+                step.classList.remove('active', 'completed');
+            }
+        });
+
+        // Update containers
+        containers.forEach((container, index) => {
+            if (index === stepIndex) {
+                container.classList.add('active');
+                if (index === 2) {
+                    // Generate affiliate links when reaching the final step
+                    const products = [
+                        {
+                            name: 'Travel Backpack Pro',
+                            timestamp: '0:45',
+                            confidence: 92,
+                            category: 'Travel Gear'
+                        },
+                        {
+                            name: 'Luxury Resort Stay',
+                            timestamp: '2:15',
+                            confidence: 88,
+                            category: 'Accommodation'
+                        },
+                        {
+                            name: 'Adventure Camera Kit',
+                            timestamp: '3:30',
+                            confidence: 95,
+                            category: 'Photography'
+                        }
+                    ];
+                    displayAffiliateLinks(products);
+                }
+            } else {
+                container.classList.remove('active');
+            }
+        });
+
+        currentStep = stepIndex;
+    }
+
+    function resetFlow() {
+        // Reset form inputs
+        fileInput.value = '';
+        youtubeInput.value = '';
+        fileInput.disabled = false;
+        youtubeInput.disabled = false;
+        analyzeButton.disabled = true;
+        continueButton.disabled = true;
+
+        // Clear grids
+        document.querySelector('.products-grid').innerHTML = '';
+        document.querySelector('.links-grid').innerHTML = '';
+
+        // Go back to first step
+        goToStep(0);
+    }
+
+    function saveCampaign() {
+        saveCampaignButton.disabled = true;
+        saveCampaignButton.textContent = 'Saving...';
+
+        // Simulate API call delay
+        setTimeout(() => {
+            alert('Campaign saved successfully!');
+            window.location.href = 'campaigns.html';
+        }, 1500);
+    }
+
+    // Initialize copy to clipboard functionality
+    window.copyToClipboard = async function(text) {
+        try {
+            await navigator.clipboard.writeText(text);
+            alert('Link copied to clipboard!');
+        } catch (err) {
+            console.error('Failed to copy text: ', err);
+        }
+    }
+
+    // Start at first step
+    goToStep(0);
 }); 
