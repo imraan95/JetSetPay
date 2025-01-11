@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - JetSetPay</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="logo">JetSetPay</a>
+        </div>
+    </nav>
+
+    <section class="signup-section">
+        <div class="container">
+            <div class="signup-form">
+                <h1>Join JetSetPay</h1>
+                <p class="subtitle">Start monetizing your travel content today</p>
+                <form id="signupForm" onsubmit="handleSubmit(event)">
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="channelUrl">Channel URL</label>
+                        <input type="url" id="channelUrl" name="channelUrl" required 
+                               placeholder="https://youtube.com/..." pattern="https?://.+">
+                    </div>
+                    <button type="submit" class="submit-button">Submit Application</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <div id="successModal" class="modal">
+        <div class="modal-content">
+            <h2>Thank You!</h2>
+            <p>Stay put, our team will get in touch with you.</p>
+            <button onclick="closeModal()" class="close-button">Close</button>
+        </div>
+    </div>
+
+    <script src="signup.js"></script>
+</body>
+</html> 
