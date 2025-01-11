@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Campaign - JetSetPay</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+    <nav class="dashboard-nav">
+        <div class="nav-logo">
+            <a href="index.html">
+                <img src="logo.svg" alt="JetSetPay" height="32">
+                <span>JetSetPay</span>
+            </a>
+        </div>
+        <div class="nav-links">
+            <a href="dashboard.html">Overview</a>
+            <a href="campaigns.html" class="active">Campaigns</a>
+            <a href="analytics.html">Analytics</a>
+            <a href="payments.html">Payments</a>
+        </div>
+        <div class="user-menu">
+            <span>Imraan</span>
+            <button onclick="handleLogout()">Logout</button>
+        </div>
+    </nav>
+
+    <main class="dashboard-content">
+        <header class="content-header">
+            <h1>Create New Campaign</h1>
+        </header>
+
+        <div class="campaign-creation-container">
+            <div class="campaign-step">
+                <h2>Upload Your Content</h2>
+                <div class="upload-section">
+                    <div class="upload-option">
+                        <h3>Upload Video</h3>
+                        <p class="upload-info">Select a video file from your device</p>
+                        <label class="upload-button">
+                            Choose File
+                            <input type="file" id="video-file" accept="video/*" style="display: none;">
+                        </label>
+                        <div id="selected-file" class="selected-file"></div>
+                    </div>
+
+                    <div class="upload-divider">OR</div>
+
+                    <div class="upload-option">
+                        <h3>YouTube Link</h3>
+                        <p class="upload-info">Paste your YouTube video link</p>
+                        <input type="text" id="youtube-link" class="youtube-input" placeholder="https://youtube.com/watch?v=...">
+                    </div>
+                </div>
+
+                <button id="analyze-button" class="upload-button analyze-button" disabled>Analyze Content</button>
+            </div>
+
+            <div id="results-section" class="results-section" style="display: none;">
+                <div class="campaign-step">
+                    <h2>Detected Products</h2>
+                    <div id="products-list" class="products-list">
+                        <!-- Products will be added here dynamically -->
+                    </div>
+                </div>
+
+                <div class="campaign-step">
+                    <h2>Generated Affiliate Links</h2>
+                    <div id="links-list" class="links-list">
+                        <!-- Links will be added here dynamically -->
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <button id="start-over" class="secondary-button">Start Over</button>
+                    <button id="save-campaign" class="upload-button">Save Campaign</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="mockData.js"></script>
+    <script src="create-campaign.js"></script>
+</body>
+</html> 

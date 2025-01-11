@@ -149,6 +149,8 @@ body {
     transition: all 0.3s ease;
     text-align: center;
     min-width: 160px;
+    border: none;
+    outline: none;
 }
 
 .cta-button:not(.secondary) {
@@ -407,15 +409,18 @@ body {
     background: var(--primary-color);
     color: white;
     border: none;
-    border-radius: 5px;
+    outline: none;
+    border-radius: 8px;
     font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: all 0.3s ease;
 }
 
 .submit-button:hover {
     background: var(--primary-dark);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px rgba(0, 180, 216, 0.2);
 }
 
 /* Modal */
@@ -551,6 +556,7 @@ input:invalid:focus {
     background: var(--primary-color);
     color: white;
     border: none;
+    outline: none;
     border-radius: 8px;
     font-size: 1rem;
     font-weight: 600;
@@ -561,6 +567,7 @@ input:invalid:focus {
 .submit-button:hover {
     background: var(--primary-dark);
     transform: translateY(-1px);
+    box-shadow: 0 4px 6px rgba(0, 180, 216, 0.2);
 }
 
 /* How It Works Section */
@@ -650,4 +657,22 @@ input:invalid:focus {
         font-size: 2rem;
         margin-bottom: 2rem;
     }
+}
+
+.primary-button {
+    padding: 0.75rem 1.5rem;
+    background: var(--primary-color);
+    color: white;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border: none;
+    outline: none;
+}
+
+.primary-button:hover {
+    background: var(--primary-dark);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px rgba(0, 180, 216, 0.2);
 } 
