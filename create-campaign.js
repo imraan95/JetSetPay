@@ -1,26 +1,22 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Initialize step navigation
-    const steps = document.querySelectorAll('.step');
-    const containers = document.querySelectorAll('.flow-container');
-    let currentStep = 0;
+    // Elements
+    const modal = document.querySelector('.campaign-modal');
+    const fileInput = document.getElementById('video-file');
+    const youtubeInput = document.getElementById('youtube-link');
+    const analyzeButton = document.getElementById('analyze-button');
+    const resultsSection = document.querySelector('.results-section');
+    const startOverButton = document.getElementById('start-over');
+    const saveCampaignButton = document.getElementById('save-campaign');
 
-    // File upload and YouTube link elements
-    const fileInput = document.getElementById('videoFile');
-    const youtubeInput = document.getElementById('youtubeLink');
-    const analyzeButton = document.getElementById('analyzeButton');
-    const continueButton = document.getElementById('continueButton');
-    const startOverButton = document.getElementById('startOverButton');
-    const saveCampaignButton = document.getElementById('saveCampaignButton');
+    // Close modal when clicking outside
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            window.location.href = 'campaigns.html';
+        }
+    });
 
-    // Event listeners for file and link inputs
-    fileInput.addEventListener('change', handleFileInput);
-    youtubeInput.addEventListener('input', handleYoutubeInput);
-    analyzeButton.addEventListener('click', handleAnalyze);
-    continueButton.addEventListener('click', () => goToStep(2));
-    startOverButton.addEventListener('click', resetFlow);
-    saveCampaignButton.addEventListener('click', saveCampaign);
-
-    function handleFileInput() {
+    // Handle file input
+    fileInput.addEventListener('change', () => {
         if (fileInput.files.length > 0) {
             youtubeInput.value = '';
             youtubeInput.disabled = true;
@@ -29,9 +25,10 @@ document.addEventListener('DOMContentLoaded', () => {
             youtubeInput.disabled = false;
             analyzeButton.disabled = !youtubeInput.value;
         }
-    }
+    });
 
-    function handleYoutubeInput() {
+    // Handle YouTube link input
+    youtubeInput.addEventListener('input', () => {
         if (youtubeInput.value) {
             fileInput.value = '';
             fileInput.disabled = true;
@@ -40,10 +37,10 @@ document.addEventListener('DOMContentLoaded', () => {
             fileInput.disabled = false;
             analyzeButton.disabled = !fileInput.files.length;
         }
-    }
+    });
 
-    async function handleAnalyze() {
-        // Show loading state
+    // Handle analyze button click
+    analyzeButton.addEventListener('click', async () => {
         analyzeButton.disabled = true;
         analyzeButton.textContent = 'Analyzing...';
 
@@ -55,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
             {
                 name: 'Travel Backpack Pro',
                 timestamp: '0:45',
-                confidence: 92,
+                confidence: 95,
                 category: 'Travel Gear'
             },
             {
@@ -65,150 +62,80 @@ document.addEventListener('DOMContentLoaded', () => {
                 category: 'Accommodation'
             },
             {
-                name: 'Adventure Camera Kit',
+                name: 'Camera Stabilizer',
                 timestamp: '3:30',
-                confidence: 95,
+                confidence: 92,
                 category: 'Photography'
             }
         ];
 
-        displayProducts(products);
-        goToStep(1);
+        displayResults(products);
 
-        // Reset button state
+        // Reset button
         analyzeButton.textContent = 'Analyze Content';
-        analyzeButton.disabled = false;
-    }
+        analyzeButton.style.display = 'none';
+        resultsSection.style.display = 'block';
+    });
 
-    function displayProducts(products) {
-        const productsGrid = document.querySelector('.products-grid');
-        productsGrid.innerHTML = '';
+    // Display results
+    function displayResults(products) {
+        const productsList = document.getElementById('products-list');
+        const linksList = document.getElementById('links-list');
+        
+        // Display products
+        productsList.innerHTML = products.map(product => `
+            <div class="product-item">
+                <h4>${product.name}</h4>
+                <p>Timestamp: ${product.timestamp} | 
+                   Confidence: ${product.confidence}% | 
+                   Category: ${product.category}</p>
+            </div>
+        `).join('');
 
-        products.forEach(product => {
-            const productItem = document.createElement('div');
-            productItem.className = 'product-item';
-            productItem.innerHTML = `
-                <h3>${product.name}</h3>
-                <p>Category: ${product.category}</p>
-                <p>Timestamp: ${product.timestamp}</p>
-                <p>Confidence: ${product.confidence}%</p>
-            `;
-            productsGrid.appendChild(productItem);
-        });
-
-        // Enable continue button
-        continueButton.disabled = false;
-    }
-
-    function displayAffiliateLinks(products) {
-        const linksGrid = document.querySelector('.links-grid');
-        linksGrid.innerHTML = '';
-
-        products.forEach(product => {
-            const affiliateLink = `https://jetsetpay.com/affiliate/${product.name.toLowerCase().replace(/\s+/g, '-')}`;
-            const linkItem = document.createElement('div');
-            linkItem.className = 'link-item';
-            linkItem.innerHTML = `
-                <div>
-                    <h3>${product.name}</h3>
-                    <p class="link-url">${affiliateLink}</p>
+        // Display affiliate links
+        linksList.innerHTML = products.map(product => {
+            const affiliateLink = `https://affiliate.store/${product.name.toLowerCase().replace(/\s+/g, '-')}`;
+            return `
+                <div class="link-item">
+                    <div>
+                        <h4>${product.name}</h4>
+                        <input type="text" value="${affiliateLink}" readonly>
+                    </div>
+                    <button onclick="copyToClipboard('${affiliateLink}')">Copy</button>
                 </div>
-                <button class="flow-button secondary" onclick="copyToClipboard('${affiliateLink}')">
-                    Copy Link
-                </button>
             `;
-            linksGrid.appendChild(linkItem);
-        });
+        }).join('');
     }
 
-    function goToStep(stepIndex) {
-        // Update steps
-        steps.forEach((step, index) => {
-            if (index < stepIndex) {
-                step.classList.remove('active');
-                step.classList.add('completed');
-            } else if (index === stepIndex) {
-                step.classList.add('active');
-                step.classList.remove('completed');
-            } else {
-                step.classList.remove('active', 'completed');
-            }
-        });
-
-        // Update containers
-        containers.forEach((container, index) => {
-            if (index === stepIndex) {
-                container.classList.add('active');
-                if (index === 2) {
-                    // Generate affiliate links when reaching the final step
-                    const products = [
-                        {
-                            name: 'Travel Backpack Pro',
-                            timestamp: '0:45',
-                            confidence: 92,
-                            category: 'Travel Gear'
-                        },
-                        {
-                            name: 'Luxury Resort Stay',
-                            timestamp: '2:15',
-                            confidence: 88,
-                            category: 'Accommodation'
-                        },
-                        {
-                            name: 'Adventure Camera Kit',
-                            timestamp: '3:30',
-                            confidence: 95,
-                            category: 'Photography'
-                        }
-                    ];
-                    displayAffiliateLinks(products);
-                }
-            } else {
-                container.classList.remove('active');
-            }
-        });
-
-        currentStep = stepIndex;
-    }
-
-    function resetFlow() {
-        // Reset form inputs
+    // Handle start over
+    startOverButton.addEventListener('click', () => {
         fileInput.value = '';
         youtubeInput.value = '';
         fileInput.disabled = false;
         youtubeInput.disabled = false;
         analyzeButton.disabled = true;
-        continueButton.disabled = true;
+        analyzeButton.style.display = 'block';
+        resultsSection.style.display = 'none';
+    });
 
-        // Clear grids
-        document.querySelector('.products-grid').innerHTML = '';
-        document.querySelector('.links-grid').innerHTML = '';
-
-        // Go back to first step
-        goToStep(0);
-    }
-
-    function saveCampaign() {
+    // Handle save campaign
+    saveCampaignButton.addEventListener('click', () => {
         saveCampaignButton.disabled = true;
         saveCampaignButton.textContent = 'Saving...';
 
-        // Simulate API call delay
+        // Simulate API call
         setTimeout(() => {
-            alert('Campaign saved successfully!');
             window.location.href = 'campaigns.html';
         }, 1500);
-    }
+    });
 
-    // Initialize copy to clipboard functionality
-    window.copyToClipboard = async function(text) {
+    // Copy to clipboard function
+    window.copyToClipboard = async (text) => {
         try {
             await navigator.clipboard.writeText(text);
             alert('Link copied to clipboard!');
         } catch (err) {
-            console.error('Failed to copy text: ', err);
+            console.error('Failed to copy text:', err);
         }
-    }
-
-    // Start at first step
-    goToStep(0);
+    };
 }); 

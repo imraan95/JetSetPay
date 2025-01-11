@@ -9,120 +9,59 @@
     <link rel="stylesheet" href="dashboard.css">
 </head>
 <body>
-    <nav class="dashboard-nav">
-        <div class="nav-logo">
-            <a href="index.html">
-                <img src="logo.svg" alt="JetSetPay" height="32">
-                <span>JetSetPay</span>
-            </a>
-        </div>
-        <div class="nav-links">
-            <a href="dashboard.html">Overview</a>
-            <a href="campaigns.html" class="active">Campaigns</a>
-            <a href="analytics.html">Analytics</a>
-            <a href="payments.html">Payments</a>
-        </div>
-        <div class="user-menu">
-            <span>Imraan</span>
-            <button onclick="handleLogout()">Logout</button>
-        </div>
-    </nav>
+    <div class="campaign-modal">
+        <div class="campaign-modal-content">
+            <div class="campaign-modal-header">
+                <h2>Create New Campaign</h2>
+                <button class="close-modal" onclick="window.location.href='campaigns.html'">&times;</button>
+            </div>
 
-    <main class="dashboard-content">
-        <div class="campaign-flow">
-            <!-- Progress Steps -->
-            <div class="progress-steps">
-                <div class="step active" id="step-1">
-                    <div class="step-number">1</div>
-                    <div class="step-label">Upload Content</div>
+            <!-- Upload Section -->
+            <div class="upload-section">
+                <div class="upload-option">
+                    <h3>Upload Video File</h3>
+                    <p>Max file size: 500MB</p>
+                    <input type="file" id="video-file" accept="video/*">
                 </div>
-                <div class="step" id="step-2">
-                    <div class="step-number">2</div>
-                    <div class="step-label">Detected Products</div>
-                </div>
-                <div class="step" id="step-3">
-                    <div class="step-number">3</div>
-                    <div class="step-label">Get Affiliate Links</div>
+
+                <div class="upload-option">
+                    <h3>YouTube Link</h3>
+                    <p>Paste your video URL below</p>
+                    <input type="text" id="youtube-link" 
+                           placeholder="https://youtube.com/watch?v=...">
                 </div>
             </div>
 
-            <!-- Container 1: Upload Content -->
-            <div class="flow-container active" id="upload-container">
-                <div class="container-header">
-                    <h2>Upload Your Content</h2>
-                    <p>Share your travel video or paste a YouTube link to get started</p>
-                </div>
-                
-                <div class="upload-options">
-                    <div class="upload-card">
-                        <div class="upload-icon">📁</div>
-                        <h3>Upload Video File</h3>
-                        <p>Max file size: 500MB</p>
-                        <label class="upload-button">
-                            Choose File
-                            <input type="file" id="video-file" accept="video/*" style="display: none;">
-                        </label>
-                        <div id="selected-file" class="selected-file"></div>
-                    </div>
+            <button id="analyze-button" class="primary-button" disabled>
+                Analyze Content
+            </button>
 
-                    <div class="upload-divider">
-                        <span>OR</span>
-                    </div>
-
-                    <div class="upload-card">
-                        <div class="upload-icon">🎥</div>
-                        <h3>YouTube Link</h3>
-                        <p>Paste your video URL below</p>
-                        <input type="text" id="youtube-link" class="youtube-input" 
-                               placeholder="https://youtube.com/watch?v=...">
-                    </div>
-                </div>
-
-                <button id="analyze-button" class="flow-button" disabled>
-                    Analyze Content
-                </button>
-            </div>
-
-            <!-- Container 2: Detected Products -->
-            <div class="flow-container" id="products-container">
-                <div class="container-header">
-                    <h2>Detected Products</h2>
-                    <p>Our AI has identified these items in your content</p>
-                </div>
-
-                <div class="products-grid" id="products-list">
+            <!-- Results Section -->
+            <div class="results-section" style="display: none;">
+                <h3>Detected Products</h3>
+                <div class="products-list" id="products-list">
                     <!-- Products will be added here dynamically -->
                 </div>
 
-                <button id="continue-to-links" class="flow-button">
-                    Continue to Affiliate Links
-                </button>
-            </div>
-
-            <!-- Container 3: Affiliate Links -->
-            <div class="flow-container" id="links-container">
-                <div class="container-header">
-                    <h2>Your Affiliate Links</h2>
-                    <p>Copy and share these links to start earning</p>
+                <div class="affiliate-links">
+                    <h3>Generated Affiliate Links</h3>
+                    <div class="links-list" id="links-list">
+                        <!-- Links will be added here dynamically -->
+                    </div>
                 </div>
 
-                <div class="links-grid" id="links-list">
-                    <!-- Links will be added here dynamically -->
-                </div>
-
-                <div class="flow-actions">
-                    <button id="start-over" class="flow-button secondary">
+                <div class="action-buttons">
+                    <button id="start-over" class="secondary-button">
                         Start Over
                     </button>
-                    <button id="save-campaign" class="flow-button">
+                    <button id="save-campaign" class="primary-button">
                         Save Campaign
                     </button>
                 </div>
             </div>
         </div>
-    </main>
+    </div>
 
-    <script src="mockData.js"></script>
     <script src="create-campaign.js"></script>
 </body>
 </html> 
