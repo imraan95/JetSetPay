@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payments - JetSetPay</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+    <nav class="dashboard-nav">
+        <div class="nav-logo">
+            <a href="index.html">
+                <img src="logo.svg" alt="JetSetPay Logo" class="logo-img">
+                JetSetPay
+            </a>
+        </div>
+        <div class="nav-links">
+            <a href="dashboard.html">Dashboard</a>
+            <a href="campaigns.html">Campaigns</a>
+            <a href="analytics.html">Analytics</a>
+            <a href="payments.html" class="active">Payments</a>
+        </div>
+        <div class="user-menu">
+            <span id="userDisplayName"></span>
+            <button onclick="handleLogout()">Logout</button>
+        </div>
+    </nav>
+
+    <main class="dashboard-content">
+        <div class="content-header">
+            <h1>Payments</h1>
+            <button class="primary-button" onclick="document.getElementById('paymentSettingsModal').style.display='block'">Payment Settings</button>
+        </div>
+
+        <div class="payments-grid">
+            <div class="payment-summary">
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <h3>Available Balance</h3>
+                        <div class="metric-value">$2,450</div>
+                        <div class="metric-change">Next payout: Dec 31, 2023</div>
+                    </div>
+                    <div class="metric-card">
+                        <h3>Lifetime Earnings</h3>
+                        <div class="metric-value">$12,850</div>
+                        <div class="metric-change">Since June 2023</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="upcoming-payments">
+                <h2>Upcoming Payments</h2>
+                <div class="payment-list">
+                    <!-- Will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <div class="payment-history">
+                <h2>Payment History</h2>
+                <div class="history-list">
+                    <!-- Will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Payment Settings Modal -->
+        <div id="paymentSettingsModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Payment Settings</h2>
+                    <span class="close" onclick="document.getElementById('paymentSettingsModal').style.display='none'">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <form id="paymentSettingsForm">
+                        <div class="form-group">
+                            <label for="paymentMethod">Payment Method</label>
+                            <select id="paymentMethod" required>
+                                <option value="bank">Bank Transfer</option>
+                                <option value="paypal">PayPal</option>
+                                <option value="wise">Wise</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="accountName">Account Name</label>
+                            <input type="text" id="accountName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="accountNumber">Account Number</label>
+                            <input type="text" id="accountNumber" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="routingNumber">Routing Number</label>
+                            <input type="text" id="routingNumber" required>
+                        </div>
+                        <button type="submit" class="primary-button">Save Settings</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="mockData.js"></script>
+    <script src="dashboard.js"></script>
+    <script src="payments.js"></script>
+</body>
+</html> 

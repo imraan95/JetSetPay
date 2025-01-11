@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campaigns - JetSetPay</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+    <nav class="dashboard-nav">
+        <div class="nav-logo">
+            <a href="index.html">
+                <img src="logo.svg" alt="JetSetPay Logo" class="logo-img">
+                JetSetPay
+            </a>
+        </div>
+        <div class="nav-links">
+            <a href="dashboard.html">Dashboard</a>
+            <a href="campaigns.html" class="active">Campaigns</a>
+            <a href="analytics.html">Analytics</a>
+            <a href="payments.html">Payments</a>
+        </div>
+        <div class="user-menu">
+            <span id="userDisplayName"></span>
+            <button onclick="handleLogout()">Logout</button>
+        </div>
+    </nav>
+
+    <main class="dashboard-content">
+        <div class="content-header">
+            <h1>Campaigns</h1>
+            <button class="primary-button" onclick="document.getElementById('uploadModal').style.display='block'">Create New Campaign</button>
+        </div>
+
+        <div class="campaigns-grid">
+            <div class="active-campaigns">
+                <h2>Active Campaigns</h2>
+                <div class="campaign-list"></div>
+            </div>
+
+            <div class="campaign-analytics">
+                <h2>Campaign Performance</h2>
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <h3>Total Revenue</h3>
+                        <div class="metric-value">$2,450</div>
+                        <div class="metric-change">+12.5% from last month</div>
+                    </div>
+                    <div class="metric-card">
+                        <h3>Active Campaigns</h3>
+                        <div class="metric-value">8</div>
+                        <div class="metric-change">3 pending approval</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Upload Modal -->
+        <div id="uploadModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Create New Campaign</h2>
+                    <span class="close" onclick="document.getElementById('uploadModal').style.display='none'">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <div class="upload-section">
+                        <h3>Upload Content</h3>
+                        <div class="upload-options">
+                            <div class="upload-option">
+                                <h4>Upload Video File</h4>
+                                <input type="file" id="videoFile" accept="video/*">
+                                <p class="helper-text">Max file size: 500MB</p>
+                            </div>
+                            <div class="upload-option">
+                                <h4>YouTube Link</h4>
+                                <input type="text" id="youtubeLink" placeholder="Paste YouTube URL here">
+                                <p class="helper-text">Example: https://youtube.com/watch?v=...</p>
+                            </div>
+                        </div>
+                        <button class="primary-button" onclick="analyzeContent()">Analyze Content</button>
+                    </div>
+                    <div id="analysisResults" class="analysis-results" style="display: none;">
+                        <h3>Analysis Results</h3>
+                        <div class="results-content">
+                            <div class="detected-products">
+                                <h4>Detected Products</h4>
+                                <ul id="productsList"></ul>
+                            </div>
+                            <div class="affiliate-links">
+                                <h4>Generated Affiliate Links</h4>
+                                <ul id="linksList"></ul>
+                            </div>
+                        </div>
+                        <button class="primary-button" onclick="saveCampaign()">Save Campaign</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="mockData.js"></script>
+    <script src="dashboard.js"></script>
+    <script src="campaigns.js"></script>
+</body>
+</html> 

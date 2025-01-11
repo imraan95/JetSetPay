@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics - JetSetPay</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="dashboard.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <nav class="dashboard-nav">
+        <div class="nav-logo">
+            <a href="index.html">
+                <img src="logo.svg" alt="JetSetPay Logo" class="logo-img">
+                JetSetPay
+            </a>
+        </div>
+        <div class="nav-links">
+            <a href="dashboard.html">Dashboard</a>
+            <a href="campaigns.html">Campaigns</a>
+            <a href="analytics.html" class="active">Analytics</a>
+            <a href="payments.html">Payments</a>
+        </div>
+        <div class="user-menu">
+            <span id="userDisplayName"></span>
+            <button onclick="handleLogout()">Logout</button>
+        </div>
+    </nav>
+
+    <main class="dashboard-content">
+        <div class="content-header">
+            <h1>Analytics</h1>
+            <div class="date-range">
+                <select id="timeRange">
+                    <option value="7">Last 7 days</option>
+                    <option value="30" selected>Last 30 days</option>
+                    <option value="90">Last 90 days</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="analytics-grid">
+            <div class="metrics-overview">
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <h3>Total Revenue</h3>
+                        <div class="metric-value">$2,450</div>
+                        <div class="metric-change positive">+12.5% from last period</div>
+                    </div>
+                    <div class="metric-card">
+                        <h3>Engagement Score</h3>
+                        <div class="metric-value">92</div>
+                        <div class="metric-change">Top 5% of creators</div>
+                    </div>
+                    <div class="metric-card">
+                        <h3>Conversion Rate</h3>
+                        <div class="metric-value">4.8%</div>
+                        <div class="metric-change positive">+0.6% from last period</div>
+                    </div>
+                    <div class="metric-card">
+                        <h3>Active Campaigns</h3>
+                        <div class="metric-value">8</div>
+                        <div class="metric-change">3 pending approval</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <h2>Revenue Trend</h2>
+                <canvas id="revenueChart"></canvas>
+            </div>
+
+            <div class="chart-container">
+                <h2>Performance Metrics</h2>
+                <canvas id="performanceChart"></canvas>
+            </div>
+
+            <div class="top-content">
+                <h2>Top Performing Content</h2>
+                <div class="content-list">
+                    <!-- Will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="mockData.js"></script>
+    <script src="dashboard.js"></script>
+    <script src="analytics.js"></script>
+</body>
+</html> 
