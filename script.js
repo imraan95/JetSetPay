@@ -30,4 +30,17 @@ stats.forEach(stat => {
 
 // Listen for scroll events to trigger animations
 window.addEventListener('scroll', animateStats);
-window.addEventListener('load', animateStats); 
+window.addEventListener('load', animateStats);
+
+// Mobile menu functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+    const navLinks = document.querySelector('.nav-links');
+
+    if (mobileMenuBtn && navLinks) {
+        mobileMenuBtn.addEventListener('click', function() {
+            navLinks.classList.toggle('active');
+            this.classList.toggle('active');
+        });
+    }
+}); 
