@@ -8,6 +8,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const startOverButton = document.getElementById('start-over');
     const saveCampaignButton = document.getElementById('save-campaign');
 
+    // API endpoint
+    const API_URL = 'http://localhost:5000/api/analyze';
+
     // Close modal when clicking outside
     modal.addEventListener('click', (e) => {
         if (e.target === modal) {
@@ -41,40 +44,50 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Handle analyze button click
     analyzeButton.addEventListener('click', async () => {
-        analyzeButton.disabled = true;
-        analyzeButton.textContent = 'Analyzing...';
+        try {
+            analyzeButton.disabled = true;
+            analyzeButton.textContent = 'Analyzing...';
 
-        // Simulate API call delay
-        await new Promise(resolve => setTimeout(resolve, 2000));
-
-        // Mock detected products
-        const products = [
-            {
-                name: 'Travel Backpack Pro',
-                timestamp: '0:45',
-                confidence: 95,
-                category: 'Travel Gear'
-            },
-            {
-                name: 'Luxury Resort Stay',
-                timestamp: '2:15',
-                confidence: 88,
-                category: 'Accommodation'
-            },
-            {
-                name: 'Camera Stabilizer',
-                timestamp: '3:30',
-                confidence: 92,
-                category: 'Photography'
+            let response;
+            if (youtubeInput.value) {
+                // Handle YouTube URL
+                response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        youtube_url: youtubeInput.value
+                    })
+                });
+            } else if (fileInput.files.length > 0) {
+                // Handle video file upload
+                const formData = new FormData();
+                formData.append('video', fileInput.files[0]);
+                
+                response = await fetch(API_URL, {
+                    method: 'POST',
+                    body: formData
+                });
             }
-        ];
 
-        displayResults(products);
+            if (!response.ok) {
+                throw new Error('Failed to analyze video');
+            }
 
-        // Reset button
-        analyzeButton.textContent = 'Analyze Content';
-        analyzeButton.style.display = 'none';
-        resultsSection.style.display = 'block';
+            const data = await response.json();
+            displayResults(data.results);
+
+            // Reset button
+            analyzeButton.textContent = 'Analyze Content';
+            analyzeButton.style.display = 'none';
+            resultsSection.style.display = 'block';
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Failed to analyze video. Please try again.');
+            analyzeButton.disabled = false;
+            analyzeButton.textContent = 'Analyze Content';
+        }
     });
 
     // Display results
