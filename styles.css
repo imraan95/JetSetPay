@@ -4,6 +4,7 @@
     --primary-color: #00B4D8;
     --primary-dark: #0077B6;
     --accent-color: #FFB830;
+    --gradient-yellow: #FFD93D;
     --text-color: #1F2937;
     --white: #ffffff;
     --gray-50: #F9FAFB;
@@ -95,7 +96,7 @@ body {
 
 /* Hero Section */
 .hero {
-    background: linear-gradient(165deg, var(--primary-dark), var(--primary-color));
+    background: linear-gradient(165deg, var(--primary-dark), var(--primary-color), var(--gradient-yellow));
     padding: 8rem 0 6rem;
     margin-top: -1rem;
     text-align: center;
@@ -225,7 +226,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(165deg, var(--primary-dark), var(--primary-color));
+    background: linear-gradient(165deg, var(--primary-dark), var(--primary-color), var(--gradient-yellow));
     padding: 2rem;
 }
 
@@ -425,4 +426,102 @@ body {
 
 .close-button:hover {
     background: var(--primary-dark);
+}
+
+/* Auth Form Styles */
+.auth-form {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 2.5rem;
+    background: var(--white);
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.auth-form h1 {
+    color: var(--text-color);
+    margin-bottom: 1rem;
+    text-align: center;
+    font-size: 2.5rem;
+}
+
+.auth-form .subtitle {
+    text-align: center;
+    color: #6B7280;
+    margin-bottom: 2rem;
+}
+
+.error-message {
+    display: none;
+    background: #FEE2E2;
+    color: #DC2626;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+}
+
+.auth-links {
+    margin-top: 2rem;
+    text-align: center;
+    color: #6B7280;
+}
+
+.auth-links a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.auth-links a:hover {
+    text-decoration: underline;
+}
+
+.auth-links .divider {
+    margin: 0 0.5rem;
+    color: #D1D5DB;
+}
+
+/* Password Requirements */
+input:invalid {
+    border-color: #DC2626;
+}
+
+input:invalid:focus {
+    border-color: #DC2626;
+    box-shadow: 0 0 0 2px rgba(220, 38, 38, 0.1);
+}
+
+/* Update existing form styles */
+.form-group input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #D1D5DB;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.form-group input:focus {
+    border-color: var(--primary-color);
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(0, 180, 216, 0.1);
+}
+
+.submit-button {
+    width: 100%;
+    padding: 1rem;
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.submit-button:hover {
+    background: var(--primary-dark);
+    transform: translateY(-1px);
 } 

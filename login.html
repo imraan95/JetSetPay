@@ -6,6 +6,8 @@
     <title>Login - JetSetPay</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://www.gstatic.com/firebasejs/9.x.x/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.x.x/firebase-auth-compat.js"></script>
 </head>
 <body>
     <nav class="navbar">
@@ -19,12 +21,33 @@
 
     <section class="login-section">
         <div class="container">
-            <div class="login-content">
-                <h1>Coming Soon</h1>
-                <p>Our login page is under construction.</p>
-                <a href="index.html" class="cta-button">Back to Home</a>
+            <div class="auth-form">
+                <h1>Welcome Back</h1>
+                <p class="subtitle">Sign in to access your dashboard</p>
+                
+                <div id="errorMessage" class="error-message"></div>
+                
+                <form id="loginForm" onsubmit="handleLogin(event)">
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" required>
+                    </div>
+                    <button type="submit" class="submit-button">Sign In</button>
+                </form>
+                
+                <div class="auth-links">
+                    <a href="#" onclick="forgotPassword(event)">Forgot Password?</a>
+                    <span class="divider">•</span>
+                    <a href="signup.html">Create Account</a>
+                </div>
             </div>
         </div>
     </section>
+
+    <script src="auth.js"></script>
 </body>
 </html> 
