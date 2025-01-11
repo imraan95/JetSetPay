@@ -10,8 +10,8 @@ function handleSubmit(event) {
     
     // Send email using EmailJS
     emailjs.send(
-        'YOUR_SERVICE_ID', // Replace with your EmailJS service ID
-        'YOUR_TEMPLATE_ID', // Replace with your EmailJS template ID
+        'service_qg24kff',
+        'template_41nmkbj',
         {
             to_email: 'm.imraan95@gmail.com',
             from_name: formData.name,
