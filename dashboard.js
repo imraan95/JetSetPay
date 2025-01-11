@@ -1,45 +1,29 @@
-// Check if user is authenticated
-const user = JSON.parse(sessionStorage.getItem('demoUser'));
-if (user) {
-    // Update user display name
-    document.getElementById('userDisplayName').textContent = user.displayName;
-    document.getElementById('userName').textContent = user.displayName;
-    
-    // Initialize dashboard
+// Initialize dashboard when DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
     initializeDashboard();
-} else {
-    // Redirect to login if not authenticated
+});
+
+function handleLogout() {
     window.location.href = 'login.html';
 }
 
-// Handle logout
-function handleLogout() {
-    sessionStorage.removeItem('demoUser');
-    window.location.href = 'index.html';
-}
-
-// Initialize dashboard components
 function initializeDashboard() {
-    updateMetrics();
     initializeRevenueChart();
     initializePerformanceChart();
     updateCampaigns();
     updatePayments();
 }
 
-// Update metrics
-function updateMetrics() {
-    document.querySelector('.metric-value').textContent = `$${mockData.metrics.totalRevenue.value}`;
-    document.querySelector('.metric-change').textContent = mockData.metrics.totalRevenue.change + ' from last month';
-}
-
-// Revenue Chart with optimized settings
 function initializeRevenueChart() {
     const ctx = document.getElementById('revenueChart').getContext('2d');
-    
-    // Disable animations for better performance
-    Chart.defaults.animation = false;
-    
+    if (!mockData.revenue.labels.length) {
+        ctx.font = '14px Plus Jakarta Sans';
+        ctx.fillStyle = '#6B7280';
+        ctx.textAlign = 'center';
+        ctx.fillText('No revenue data available', ctx.canvas.width / 2, ctx.canvas.height / 2);
+        return;
+    }
+
     new Chart(ctx, {
         type: 'line',
         data: {
@@ -47,7 +31,7 @@ function initializeRevenueChart() {
             datasets: [{
                 label: 'Revenue',
                 data: mockData.revenue.data,
-                borderColor: 'rgb(0, 180, 216)',
+                borderColor: '#00B4D8',
                 backgroundColor: 'rgba(0, 180, 216, 0.1)',
                 tension: 0.3,
                 fill: true,
@@ -100,10 +84,16 @@ function initializeRevenueChart() {
     });
 }
 
-// Performance Chart with optimized settings
 function initializePerformanceChart() {
     const ctx = document.getElementById('performanceChart').getContext('2d');
-    
+    if (!mockData.performance.labels.length) {
+        ctx.font = '14px Plus Jakarta Sans';
+        ctx.fillStyle = '#6B7280';
+        ctx.textAlign = 'center';
+        ctx.fillText('No performance data available', ctx.canvas.width / 2, ctx.canvas.height / 2);
+        return;
+    }
+
     new Chart(ctx, {
         type: 'radar',
         data: {
@@ -143,9 +133,18 @@ function initializePerformanceChart() {
     });
 }
 
-// Update campaigns list
 function updateCampaigns() {
     const campaignList = document.querySelector('.campaign-list');
+    if (!mockData.campaigns.length) {
+        campaignList.innerHTML = `
+            <div class="empty-state">
+                <p>No active campaigns</p>
+                <a href="campaigns.html" class="primary-button">Create Campaign</a>
+            </div>
+        `;
+        return;
+    }
+
     campaignList.innerHTML = mockData.campaigns.map(campaign => `
         <div class="campaign-item">
             <div class="campaign-info">
@@ -160,9 +159,17 @@ function updateCampaigns() {
     `).join('');
 }
 
-// Update payments list
 function updatePayments() {
     const paymentList = document.querySelector('.payment-list');
+    if (!mockData.payments.length) {
+        paymentList.innerHTML = `
+            <div class="empty-state">
+                <p>No upcoming payments</p>
+            </div>
+        `;
+        return;
+    }
+
     paymentList.innerHTML = mockData.payments.map(payment => `
         <div class="payment-item">
             <div class="payment-info">
