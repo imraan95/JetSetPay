@@ -1,8 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
 
 :root {
     --primary-color: #00B4D8;
     --primary-dark: #0077B6;
+    --primary-darker: #023E8A;
     --accent-color: #FFB830;
     --gradient-yellow: #FFD93D;
     --text-color: #1F2937;
@@ -18,7 +19,7 @@
 }
 
 body {
-    font-family: 'Outfit', sans-serif;
+    font-family: 'Plus Jakarta Sans', sans-serif;
     line-height: 1.6;
     color: var(--text-color);
     background-color: var(--gray-50);
@@ -96,7 +97,7 @@ body {
 
 /* Hero Section */
 .hero {
-    background: linear-gradient(165deg, var(--primary-dark), var(--primary-color), var(--gradient-yellow));
+    background: linear-gradient(165deg, var(--primary-darker), var(--primary-dark), var(--primary-color));
     padding: 8rem 0 6rem;
     margin-top: -1rem;
     text-align: center;
@@ -118,7 +119,7 @@ body {
     font-size: 3.5rem;
     line-height: 1.2;
     margin-bottom: 1.5rem;
-    font-weight: 700;
+    font-weight: 800;
     color: var(--white);
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
@@ -128,6 +129,7 @@ body {
     max-width: 800px;
     margin: 0 auto 3rem;
     color: rgba(255, 255, 255, 0.9);
+    font-weight: 500;
 }
 
 .cta-button {
@@ -137,18 +139,36 @@ body {
     color: var(--text-color);
     text-decoration: none;
     border-radius: 50px;
-    font-weight: 600;
+    font-weight: 700;
     font-size: 1.2rem;
-    transition: all 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     margin: 0 auto;
     text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.cta-button:after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: linear-gradient(120deg, transparent, rgba(255,255,255,0.2), transparent);
+    transform: translateX(-100%);
 }
 
 .cta-button:hover {
-    transform: translateY(-2px);
+    transform: translateY(-2px) scale(1.02);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
     background: #FFA500;
+}
+
+.cta-button:hover:after {
+    transform: translateX(100%);
+    transition: all 0.6s ease;
 }
 
 /* Stats Section */
@@ -185,7 +205,7 @@ body {
     background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    font-weight: 700;
+    font-weight: 800;
 }
 
 .stat-card p {
@@ -226,7 +246,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(165deg, var(--primary-dark), var(--primary-color), var(--gradient-yellow));
+    background: linear-gradient(165deg, var(--primary-darker), var(--primary-dark), var(--primary-color));
     padding: 2rem;
 }
 

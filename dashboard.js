@@ -1,27 +1,21 @@
 // Check if user is authenticated
-auth.onAuthStateChanged((user) => {
-    if (user) {
-        // Update user display name
-        document.getElementById('userDisplayName').textContent = user.displayName;
-        document.getElementById('userName').textContent = user.displayName.split(' ')[0];
-        
-        // Initialize dashboard
-        initializeDashboard();
-    } else {
-        // Redirect to login if not authenticated
-        window.location.href = 'login.html';
-    }
-});
+const user = JSON.parse(sessionStorage.getItem('demoUser'));
+if (user) {
+    // Update user display name
+    document.getElementById('userDisplayName').textContent = user.displayName;
+    document.getElementById('userName').textContent = user.displayName;
+    
+    // Initialize dashboard
+    initializeDashboard();
+} else {
+    // Redirect to login if not authenticated
+    window.location.href = 'login.html';
+}
 
 // Handle logout
 function handleLogout() {
-    auth.signOut()
-        .then(() => {
-            window.location.href = 'index.html';
-        })
-        .catch((error) => {
-            console.error('Error signing out:', error);
-        });
+    sessionStorage.removeItem('demoUser');
+    window.location.href = 'index.html';
 }
 
 // Initialize dashboard components

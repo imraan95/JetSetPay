@@ -1,17 +1,20 @@
 // Firebase configuration
 const firebaseConfig = {
-    // Replace with your Firebase config
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_AUTH_DOMAIN",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_STORAGE_BUCKET",
-    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-    appId: "YOUR_APP_ID"
+    apiKey: "AIzaSyBxJLvqXUCxCZqHPgHLQtW_Xc-lW_Qwu4Y",
+    authDomain: "jetsetpay-demo.firebaseapp.com",
+    projectId: "jetsetpay-demo",
+    storageBucket: "jetsetpay-demo.appspot.com",
+    messagingSenderId: "123456789012",
+    appId: "1:123456789012:web:abc123def456ghi789"
 };
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
+
+// Test credentials for demo
+const TEST_EMAIL = 'm.imraan95@gmail.com';
+const TEST_PASSWORD = 'test';
 
 // Handle Login
 async function handleLogin(event) {
@@ -22,9 +25,18 @@ async function handleLogin(event) {
     const errorMessage = document.getElementById('errorMessage');
     
     try {
-        const userCredential = await auth.signInWithEmailAndPassword(email, password);
-        // Redirect to dashboard or home page
-        window.location.href = 'dashboard.html';
+        // For demo purposes, only allow test credentials
+        if (email === TEST_EMAIL && password === TEST_PASSWORD) {
+            // Create a custom user object since we're not actually using Firebase
+            const user = {
+                displayName: 'Imraan',
+                email: TEST_EMAIL
+            };
+            sessionStorage.setItem('demoUser', JSON.stringify(user));
+            window.location.href = 'dashboard.html';
+        } else {
+            throw new Error('Invalid credentials. Please use the test account.');
+        }
     } catch (error) {
         errorMessage.textContent = error.message;
         errorMessage.style.display = 'block';
@@ -37,31 +49,11 @@ async function handleSignup(event) {
     
     const name = document.getElementById('name').value;
     const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
     const channelUrl = document.getElementById('channelUrl')?.value;
-    const errorMessage = document.getElementById('errorMessage');
     
-    try {
-        // Create user
-        const userCredential = await auth.createUserWithEmailAndPassword(email, password);
-        
-        // Update profile
-        await userCredential.user.updateProfile({
-            displayName: name
-        });
-        
-        // Store additional user data
-        // Here you would typically store the channelUrl in your database
-        
-        // Send verification email
-        await userCredential.user.sendEmailVerification();
-        
-        // Show success message
-        document.getElementById('successModal').classList.add('show');
-    } catch (error) {
-        errorMessage.textContent = error.message;
-        errorMessage.style.display = 'block';
-    }
+    // For demo, just show the success message
+    document.getElementById('successModal').classList.add('show');
+    document.getElementById('signupForm').reset();
 }
 
 // Handle Forgot Password
@@ -77,27 +69,31 @@ async function forgotPassword(event) {
         return;
     }
     
-    try {
-        await auth.sendPasswordResetEmail(email);
-        alert('Password reset email sent! Check your inbox.');
-    } catch (error) {
-        errorMessage.textContent = error.message;
-        errorMessage.style.display = 'block';
-    }
+    alert('For demo purposes, please use the test account:\nEmail: m.imraan95@gmail.com\nPassword: test');
 }
 
 // Check auth state
-auth.onAuthStateChanged((user) => {
+function checkAuth() {
+    const user = JSON.parse(sessionStorage.getItem('demoUser'));
     if (user) {
-        // User is signed in
         if (window.location.pathname.includes('login.html') || 
             window.location.pathname.includes('signup.html')) {
             window.location.href = 'dashboard.html';
         }
+        return user;
     } else {
-        // User is signed out
         if (window.location.pathname.includes('dashboard.html')) {
             window.location.href = 'login.html';
         }
+        return null;
     }
-}); 
+}
+
+// Handle logout
+function handleLogout() {
+    sessionStorage.removeItem('demoUser');
+    window.location.href = 'index.html';
+}
+
+// Initialize auth check
+checkAuth(); 
