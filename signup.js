@@ -8,14 +8,30 @@ function handleSubmit(event) {
         channelUrl: document.getElementById('channelUrl').value
     };
     
-    // Here you would typically send this data to your backend
-    console.log('Form submitted:', formData);
-    
-    // Show success modal
-    document.getElementById('successModal').classList.add('show');
-    
-    // Reset form
-    document.getElementById('signupForm').reset();
+    // Send email using EmailJS
+    emailjs.send(
+        'YOUR_SERVICE_ID', // Replace with your EmailJS service ID
+        'YOUR_TEMPLATE_ID', // Replace with your EmailJS template ID
+        {
+            to_email: 'm.imraan95@gmail.com',
+            from_name: formData.name,
+            from_email: formData.email,
+            channel_url: formData.channelUrl,
+            message: `New signup from ${formData.name}\nEmail: ${formData.email}\nChannel: ${formData.channelUrl}`
+        }
+    ).then(
+        function(response) {
+            console.log('Email sent successfully:', response);
+            // Show success modal
+            document.getElementById('successModal').classList.add('show');
+            // Reset form
+            document.getElementById('signupForm').reset();
+        },
+        function(error) {
+            console.error('Email send failed:', error);
+            alert('There was an error submitting your application. Please try again.');
+        }
+    );
 }
 
 function closeModal() {

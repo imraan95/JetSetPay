@@ -1,8 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
+
 :root {
-    --primary-color: #40C5C5;
-    --primary-dark: #35A8A8;
-    --text-color: #333333;
+    --primary-color: #2DD4BF;
+    --primary-dark: #0D9488;
+    --text-color: #1F2937;
     --white: #ffffff;
+    --gray-50: #F9FAFB;
+    --gray-100: #F3F4F6;
 }
 
 * {
@@ -12,9 +16,10 @@
 }
 
 body {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Outfit', sans-serif;
     line-height: 1.6;
     color: var(--text-color);
+    background-color: var(--gray-50);
 }
 
 .container {
@@ -25,9 +30,13 @@ body {
 
 /* Navbar */
 .navbar {
-    background: var(--white);
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
     padding: 1rem 0;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 100;
 }
 
 .navbar .container {
@@ -37,9 +46,17 @@ body {
 }
 
 .logo {
-    font-size: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.75rem;
     font-weight: 700;
     color: var(--primary-color);
+    text-decoration: none;
+}
+
+.logo img {
+    height: 32px;
 }
 
 .nav-links {
@@ -77,12 +94,9 @@ body {
 
 /* Hero Section */
 .hero {
-    background: var(--primary-color);
-    color: var(--white);
-    padding: 6rem 0;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+    padding: 8rem 0 6rem;
+    margin-top: -1rem;
 }
 
 .hero::after {
@@ -97,7 +111,8 @@ body {
 }
 
 .hero h1 {
-    font-size: 3rem;
+    font-size: 3.5rem;
+    line-height: 1.2;
     margin-bottom: 1.5rem;
     font-weight: 700;
 }
@@ -110,18 +125,20 @@ body {
 
 .cta-button {
     display: inline-block;
-    padding: 1rem 2rem;
-    background: #FFD700;
-    color: var(--text-color);
+    padding: 1rem 2.5rem;
+    background: var(--white);
+    color: var(--primary-dark);
     text-decoration: none;
     border-radius: 50px;
     font-weight: 600;
     font-size: 1.1rem;
-    transition: transform 0.3s ease;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .cta-button:hover {
     transform: translateY(-2px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
 }
 
 /* Stats Section */
@@ -137,32 +154,42 @@ body {
 }
 
 .stat-card {
-    background: var(--primary-color);
-    color: var(--white);
-    padding: 2rem;
+    background: var(--white);
+    color: var(--text-color);
+    padding: 2.5rem;
     border-radius: 20px;
     text-align: center;
-    transition: transform 0.3s ease;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--gray-100);
 }
 
 .stat-card:hover {
     transform: translateY(-5px);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.1);
 }
 
 .stat-card h2 {
-    font-size: 2.5rem;
+    font-size: 3rem;
     margin-bottom: 1rem;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 700;
 }
 
 .stat-card p {
-    font-size: 1.1rem;
+    font-size: 1.25rem;
     margin-bottom: 1rem;
-    font-weight: 500;
+    font-weight: 600;
+    color: var(--text-color);
 }
 
 .stat-card span {
-    font-size: 0.9rem;
-    opacity: 0.9;
+    font-size: 1rem;
+    color: #6B7280;
+    display: block;
+    font-weight: 400;
 }
 
 /* Responsive Design */
